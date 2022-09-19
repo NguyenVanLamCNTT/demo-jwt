@@ -55,7 +55,7 @@ public class AuthController {
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		System.out.println();
+		System.out.println(userDetails.getUsername());
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());		
 
 		String jwt = jwtUtils.generateJwtToken(userDetails.getUsername());
@@ -65,8 +65,8 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody User signUpRequest) {
-		User user = new User(signUpRequest.getUsername(), 
-							 signUpRequest.getEmail(),
+		User user = new User(signUpRequest.getEmail(), 
+							 signUpRequest.getUsername(),
 							 encoder.encode(signUpRequest.getPassword()));
 
 		User userCheck = userRepository.findByUsername(signUpRequest.getUsername());

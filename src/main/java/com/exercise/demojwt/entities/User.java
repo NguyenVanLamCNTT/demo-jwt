@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,8 +30,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany
-    @JoinColumn(name = "roleId")
+    @OneToOne
+    @JoinColumn(name="role_id", referencedColumnName = "id")
     private Role role;
 
     
@@ -39,6 +40,9 @@ public class User {
         this.email = email;
         this.username = username;
         this.password = password;
+    }
+    public User(){
+        
     }
 
     public int getId() {
